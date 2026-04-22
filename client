@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DH Designer — Design Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080810;
+  --surface:rgba(255,255,255,0.04);
+  --surface2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --text:#f0eee8;
+  --text-muted:rgba(240,238,232,0.45);
+  --accent:#a78bfa;
+  --accent2:#7c3aed;
+  --gold:#e8c97a;
+  --glass-bg:rgba(12,10,24,0.8);
+  --glass-border:rgba(167,139,250,0.18);
+  --approve:#34d399;
+  --change:#f87171;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 15% 40%,rgba(124,58,237,.14) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 20%,rgba(167,139,250,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 90%,rgba(80,30,160,.12) 0%,transparent 50%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(167,139,250,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(167,139,250,0.025) 1px,transparent 1px);
+  background-size:80px 80px;
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+position:fixed;top:0;left:0;right:0;z-index:100;
+height:68px;padding:0 40px;
+display:flex;align-items:center;justify-content:space-between;
+backdrop-filter:blur(32px) saturate(1.4);
+background:rgba(8,8,16,0.82);
+border-bottom:1px solid var(–border);
+}
+.logo{
+font-family:‘Bebas Neue’,sans-serif;font-size:1.5rem;letter-spacing:.12em;
+background:linear-gradient(135deg,#f0eee8,var(–accent));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.header-pill{
+font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+padding:6px 14px;border-radius:100px;
+background:linear-gradient(135deg,rgba(167,139,250,.12),rgba(124,58,237,.08));
+border:1px solid var(–glass-border);color:var(–accent);
+}
+
+/* ── HERO ── */
+.hero{
+position:relative;z-index:1;
+padding:100px 40px 48px;
+background:linear-gradient(to bottom,rgba(124,58,237,.06),transparent);
+border-bottom:1px solid var(–border);
+}
+.hero-label{
+font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;
+color:var(–accent);margin-bottom:12px;
+display:flex;align-items:center;gap:8px;
+}
+.hero-label::before{content:’’;width:20px;height:1px;background:var(–accent)}
+.hero-title{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:clamp(2.5rem,6vw,4.5rem);
+letter-spacing:.04em;line-height:.92;
+background:linear-gradient(135deg,#fff,rgba(167,139,250,.8));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+margin-bottom:16px;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.hero-tag{
+font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
+padding:6px 14px;border-radius:100px;
+background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);
+color:var(–accent);font-weight:500;
+}
+.hero-tag.date{background:var(–surface);border-color:var(–border2);color:var(–text-muted)}
+
+/* ── MAIN ── */
+.main{
+max-width:1160px;margin:0 auto;
+padding:40px 40px;
+position:relative;z-index:1;
+display:grid;
+grid-template-columns:1fr 360px;
+gap:28px;align-items:start;
+}
+
+/* ── GALLERY ── */
+.gallery-wrap{position:relative}
+.sec-label{
+font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+color:var(–accent);margin-bottom:16px;
+display:flex;align-items:center;gap:8px;
+}
+.sec-label::before{content:’’;width:14px;height:1px;background:var(–accent)}
+
+.gallery-main{
+background:rgba(255,255,255,0.02);
+border:1px solid var(–border);border-radius:20px;
+overflow:hidden;margin-bottom:14px;
+min-height:380px;
+display:flex;align-items:center;justify-content:center;
+position:relative;
+box-shadow:0 8px 40px rgba(0,0,0,.4);
+}
+.gallery-main img{
+width:100%;height:auto;max-height:600px;
+object-fit:contain;display:block;
+filter:brightness(.95);
+}
+.doc-ph{
+display:flex;flex-direction:column;align-items:center;
+justify-content:center;padding:60px;text-align:center;
+}
+.doc-ph .d-icon{font-size:3rem;margin-bottom:14px;opacity:.3}
+.doc-ph .d-name{
+font-family:‘Syne’,sans-serif;font-size:1.1rem;font-weight:600;
+margin-bottom:6px;
+}
+.doc-ph .d-sub{font-size:.8rem;color:var(–text-muted)}
+
+.gal-nav{
+position:absolute;top:50%;transform:translateY(-50%);
+background:rgba(12,10,24,.85);backdrop-filter:blur(12px);
+border:1px solid var(–glass-border);
+border-radius:50%;width:42px;height:42px;
+display:flex;align-items:center;justify-content:center;
+cursor:pointer;font-size:1.1rem;color:var(–text);
+transition:all .2s;z-index:10;
+}
+.gal-nav:hover{background:rgba(124,58,237,.3);border-color:rgba(167,139,250,.4)}
+.gal-nav.hidden{opacity:0;pointer-events:none}
+.gal-nav.prev{left:12px}
+.gal-nav.next{right:12px}
+
+.counter{
+position:absolute;bottom:12px;right:12px;
+font-size:.65rem;letter-spacing:.12em;
+background:rgba(8,8,16,.8);backdrop-filter:blur(8px);
+padding:4px 12px;border-radius:100px;
+border:1px solid var(–border);color:var(–text-muted);
+}
+
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumb{
+width:60px;height:60px;border-radius:10px;
+object-fit:cover;cursor:pointer;
+border:2px solid transparent;transition:all .2s;opacity:.55;
+}
+.thumb:hover{opacity:.85}
+.thumb.active{border-color:var(–accent);opacity:1;box-shadow:0 0 16px rgba(124,58,237,.3)}
+.thumb-doc{
+width:60px;height:60px;border-radius:10px;
+background:rgba(167,139,250,.08);border:2px solid transparent;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+font-size:.6rem;color:var(–text-muted);cursor:pointer;
+transition:all .2s;opacity:.55;
+}
+.thumb-doc:hover{opacity:.85}
+.thumb-doc.active{border-color:var(–accent);opacity:1}
+.thumb-doc span{font-size:1.1rem;margin-bottom:2px}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:88px}
+.glass-card{
+background:var(–glass-bg);backdrop-filter:blur(32px);
+border:1px solid var(–glass-border);
+border-radius:22px;padding:28px;
+box-shadow:0 8px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05);
+margin-bottom:16px;position:relative;overflow:hidden;
+}
+.glass-card::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,rgba(167,139,250,.3),transparent);
+}
+
+/* STATUS */
+.status-bar{
+display:flex;align-items:center;gap:10px;
+padding:12px 16px;border-radius:12px;
+font-size:.78rem;font-weight:500;margin-bottom:20px;
+letter-spacing:.04em;
+}
+.status-bar.pending{
+background:rgba(232,201,122,.08);border:1px solid rgba(232,201,122,.15);
+color:var(–gold);
+}
+.status-bar.approved{
+background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.15);
+color:var(–approve);
+}
+.status-bar.changes{
+background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);
+color:var(–change);
+}
+
+.note-box{
+background:rgba(167,139,250,.06);
+border-left:2px solid var(–accent);
+border-radius:0 10px 10px 0;
+padding:12px 16px;
+font-size:.8rem;color:var(–text-muted);line-height:1.6;
+margin-bottom:20px;
+}
+
+/* ACTION BUTTONS */
+.act-btn{
+display:flex;align-items:center;justify-content:center;gap:8px;
+width:100%;padding:15px;border-radius:14px;
+font-family:‘DM Sans’,sans-serif;font-size:.82rem;font-weight:500;
+cursor:pointer;border:none;letter-spacing:.06em;text-transform:uppercase;
+transition:all .28s;margin-bottom:10px;
+position:relative;overflow:hidden;
+}
+.act-btn::before{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);
+opacity:0;transition:opacity .2s;
+}
+.act-btn:hover::before{opacity:1}
+.btn-approve{
+background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(16,185,129,.15));
+border:1px solid rgba(52,211,153,.3);color:var(–approve);
+box-shadow:0 0 24px rgba(52,211,153,.1);
+}
+.btn-approve:hover{
+box-shadow:0 0 40px rgba(52,211,153,.2);
+transform:translateY(-2px);
+}
+.btn-change{
+background:rgba(255,255,255,.03);
+border:1px solid var(–border2);color:var(–text-muted);
+}
+.btn-change:hover{
+background:rgba(248,113,113,.06);
+border-color:rgba(248,113,113,.25);color:var(–change);
+transform:translateY(-2px);
+}
+
+/* FEEDBACK FORM */
+.fb-form{display:none;animation:fadeIn .3s ease}
+.fb-form.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.fb-form .f-label{
+display:block;font-size:.62rem;text-transform:uppercase;
+letter-spacing:.18em;color:var(–text-muted);margin-bottom:8px;margin-top:14px;
+}
+.fb-form textarea,.fb-form select{
+width:100%;
+background:rgba(255,255,255,.05);
+border:1px solid var(–border2);border-radius:12px;
+padding:12px 14px;
+font-family:‘DM Sans’,sans-serif;font-size:.83rem;color:var(–text);
+resize:vertical;min-height:90px;outline:none;transition:all .2s;
+}
+.fb-form select{min-height:unset;resize:none}
+.fb-form textarea::placeholder{color:var(–text-muted)}
+.fb-form textarea:focus,.fb-form select:focus{
+border-color:rgba(167,139,250,.5);
+background:rgba(167,139,250,.06);
+}
+.fb-form select option{background:#1a1830}
+.send-btn{
+width:100%;padding:13px;border-radius:100px;margin-top:14px;
+background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(124,58,237,.15));
+border:1px solid rgba(167,139,250,.35);color:#fff;
+font-family:‘DM Sans’,sans-serif;font-size:.78rem;font-weight:500;
+letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+transition:all .25s;
+box-shadow:0 0 20px rgba(124,58,237,.1);
+}
+.send-btn:hover{
+box-shadow:0 0 36px rgba(124,58,237,.25);
+background:linear-gradient(135deg,rgba(167,139,250,.3),rgba(124,58,237,.25));
+transform:translateY(-1px);
+}
+
+/* SUCCESS */
+.success{display:none;text-align:center;padding:24px 12px;animation:fadeIn .4s ease}
+.success.show{display:block}
+.suc-icon{font-size:2.5rem;margin-bottom:12px}
+.suc-title{
+font-family:‘Syne’,sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:6px;
+}
+.suc-sub{font-size:.8rem;color:var(–text-muted);line-height:1.6}
+
+/* DOWNLOAD */
+.dl-list{display:flex;flex-direction:column;gap:8px}
+.dl-item{
+display:flex;align-items:center;gap:12px;
+padding:12px 14px;border-radius:14px;
+background:rgba(255,255,255,.03);border:1px solid var(–border);
+cursor:pointer;transition:all .25s;text-decoration:none;
+position:relative;overflow:hidden;
+}
+.dl-item::before{
+content:’’;position:absolute;left:0;top:0;bottom:0;width:2px;
+background:linear-gradient(to bottom,var(–accent),var(–accent2));
+opacity:0;transition:opacity .2s;
+}
+.dl-item:hover{
+background:rgba(167,139,250,.06);
+border-color:var(–glass-border);
+transform:translateX(4px);
+box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.dl-item:hover::before{opacity:1}
+.dl-icon{font-size:1.3rem;flex-shrink:0}
+.dl-info{flex:1;min-width:0}
+.dl-name{
+font-size:.8rem;font-weight:500;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.dl-size{font-size:.68rem;color:var(–text-muted)}
+.dl-btn{
+display:inline-flex;align-items:center;gap:5px;
+padding:7px 14px;border-radius:100px;
+background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(124,58,237,.1));
+border:1px solid var(–glass-border);color:var(–accent);
+font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+font-family:‘DM Sans’,sans-serif;flex-shrink:0;
+transition:all .2s;
+}
+.dl-item:hover .dl-btn{
+background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(124,58,237,.2));
+box-shadow:0 0 14px rgba(124,58,237,.2);
+}
+
+/* DOWNLOAD ALL BTN */
+.dl-all-btn{
+display:flex;align-items:center;justify-content:center;gap:8px;
+width:100%;padding:13px;border-radius:100px;margin-top:14px;
+background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(124,58,237,.1));
+border:1px solid var(–glass-border);color:var(–accent);
+font-family:‘DM Sans’,sans-serif;font-size:.78rem;font-weight:500;
+letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+transition:all .25s;
+}
+.dl-all-btn:hover{
+background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(124,58,237,.2));
+box-shadow:0 0 28px rgba(124,58,237,.2);
+transform:translateY(-1px);
+}
+
+/* NOT FOUND */
+.not-found{
+max-width:440px;margin:140px auto;text-align:center;
+padding:60px 40px;position:relative;z-index:1;
+}
+.nf-icon{
+width:80px;height:80px;border-radius:50%;
+background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(124,58,237,.06));
+border:1px solid var(–glass-border);
+display:flex;align-items:center;justify-content:center;
+font-size:2rem;margin:0 auto 20px;opacity:.6;
+}
+.nf-title{
+font-family:‘Syne’,sans-serif;font-size:1.8rem;font-weight:700;
+margin-bottom:8px;
+}
+.nf-sub{font-size:.85rem;color:var(–text-muted);line-height:1.7}
+
+/* TOAST */
+.toast{
+position:fixed;bottom:28px;right:28px;
+background:linear-gradient(135deg,rgba(18,14,36,.98),rgba(12,8,24,.98));
+border:1px solid var(–glass-border);color:var(–text);
+padding:14px 22px;border-radius:14px;font-size:.8rem;font-weight:500;
+display:flex;align-items:center;gap:10px;
+transform:translateY(80px);opacity:0;
+transition:all .35s cubic-bezier(.34,1.56,.64,1);
+z-index:9999;pointer-events:none;
+box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 24px rgba(124,58,237,.12);
+backdrop-filter:blur(20px);
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+@media(max-width:900px){
+header{padding:0 20px}
+.hero{padding:90px 20px 36px}
+.main{grid-template-columns:1fr;padding:24px 20px;gap:20px}
+.sidebar{position:static}
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">DH Designer</div>
+  <span class="header-pill">Design Review</span>
+</header>
+
+<!-- HERO -->
+
+<div class="hero" id="hero" style="display:none">
+  <div class="hero-label">Design Präsentation</div>
+  <div class="hero-title" id="hero-title">Design</div>
+  <div class="hero-tags" id="hero-tags"></div>
+</div>
+
+<!-- MAIN -->
+
+<div class="main" id="main-content" style="display:none">
+
+  <!-- GALLERY -->
+
+  <div class="gallery-wrap">
+    <div class="sec-label">Vorschau</div>
+    <div class="gallery-main" id="gallery-main">
+      <button class="gal-nav prev hidden" id="nav-prev" onclick="nav(-1)">‹</button>
+      <div id="gallery-viewer" style="width:100%"></div>
+      <div class="counter" id="gal-counter"></div>
+      <button class="gal-nav next hidden" id="nav-next" onclick="nav(1)">›</button>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+
+  <div class="sidebar">
+
+```
+<!-- STATUS + ACTIONS -->
+<div class="glass-card">
+  <div class="sec-label">Status</div>
+  <div class="status-bar pending" id="status-bar">◌ Ausstehende Freigabe</div>
+  <div class="note-box" id="note-box" style="display:none"></div>
+
+  <div id="action-area">
+    <button class="act-btn btn-approve" onclick="approve()">✓ Design freigeben</button>
+    <button class="act-btn btn-change" onclick="toggleFbForm()">✎ Änderungen anfragen</button>
+    <div class="fb-form" id="fb-form">
+      <label class="f-label">Was soll geändert werden?</label>
+      <textarea id="fb-text" placeholder="Beschreibe genau, was du ändern möchtest..."></textarea>
+      <label class="f-label">Bezieht sich auf</label>
+      <select id="fb-file-ref">
+        <option value="">Allgemeines Feedback</option>
+      </select>
+      <button class="send-btn" onclick="sendFb()">↑ Feedback senden</button>
+    </div>
+  </div>
+
+  <div class="success" id="suc-approve">
+    <div class="suc-icon">✓</div>
+    <div class="suc-title">Freigegeben!</div>
+    <div class="suc-sub">Super! Dein Designer wurde informiert. Vielen Dank!</div>
+  </div>
+  <div class="success" id="suc-fb">
+    <div class="suc-icon">✉</div>
+    <div class="suc-title">Feedback gesendet!</div>
+    <div class="suc-sub">Dein Feedback wurde übermittelt. Dein Designer meldet sich bald.</div>
+  </div>
+</div>
+
+<!-- DOWNLOADS -->
+<div class="glass-card">
+  <div class="sec-label">Dateien herunterladen</div>
+  <div class="dl-list" id="dl-list"></div>
+  <button class="dl-all-btn" id="dl-all-btn" onclick="downloadAll()">⬇ Alle Dateien herunterladen</button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- NOT FOUND -->
+
+<div class="not-found" id="not-found" style="display:none">
+  <div class="nf-icon">◻</div>
+  <div class="nf-title">Nicht gefunden</div>
+  <div class="nf-sub">Dieser Link ist ungültig oder das Design wurde entfernt.<br>Bitte kontaktiere deinen Designer.</div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg">✓</span></div>
+
+<script>
+const STORAGE_KEY='dh_designer_projects';
+function getProjects(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch{return[]}}
+function saveProjects(a){localStorage.setItem(STORAGE_KEY,JSON.stringify(a))}
+
+const pid=new URLSearchParams(location.search).get('id');
+let proj=null,curIdx=0;
+
+function init(){
+  if(!pid){show('not-found');return}
+  const all=getProjects();
+  proj=all.find(p=>p.id===pid);
+  if(!proj){show('not-found');return}
+  // Track view
+  proj.views=(proj.views||0)+1;
+  const i=all.findIndex(p=>p.id===pid);
+  if(i>-1){all[i]=proj;saveProjects(all)}
+  render();
+}
+
+function show(id){document.getElementById(id).style.display='block'}
+
+function render(){
+  document.title=`${proj.name} — DH Designer`;
+  show('hero');
+  document.getElementById('hero-title').textContent=proj.name;
+  const tags=document.getElementById('hero-tags');
+  const date=new Date(proj.created).toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  tags.innerHTML=`
+    <span class="hero-tag">${proj.category}</span>
+    ${proj.client?`<span class="hero-tag">${proj.client}</span>`:''}
+    <span class="hero-tag date">${date}</span>
+    <span class="hero-tag date">${proj.files.length} Datei${proj.files.length!==1?'en':''}</span>`;
+
+  document.getElementById('main-content').style.display='grid';
+  setStatus(proj.status);
+
+  if(proj.note){
+    const nb=document.getElementById('note-box');
+    nb.textContent='📌 '+proj.note;nb.style.display='block';
+  }
+
+  renderGallery(0);
+  renderDl();
+
+  // File selector
+  const sel=document.getElementById('fb-file-ref');
+  proj.files.forEach(f=>{
+    const o=document.createElement('option');
+    o.value=f.name;o.textContent=f.name;sel.appendChild(o);
+  });
+
+  if(proj.status==='approved')showApproved();
+  if(proj.status==='changes'&&proj.feedback?.length)showFbSent();
+}
+
+// GALLERY
+function renderGallery(idx){
+  curIdx=idx;
+  const f=proj.files[idx];
+  const v=document.getElementById('gallery-viewer');
+
+  if(f.type.startsWith('image/')){
+    v.innerHTML=`<img src="${f.data}" alt="${f.name}" style="width:100%;height:auto;max-height:600px;object-fit:contain;display:block">`;
+  } else {
+    const ext=f.name.split('.').pop().toUpperCase();
+    v.innerHTML=`<div class="doc-ph">
+      <div class="d-icon">📄</div>
+      <div class="d-name">${f.name}</div>
+      <div class="d-sub">${ext} — Lade die Datei herunter zum Anzeigen</div>
+    </div>`;
+  }
+
+  document.getElementById('nav-prev').classList.toggle('hidden',idx===0);
+  document.getElementById('nav-next').classList.toggle('hidden',idx===proj.files.length-1);
+
+  const counter=document.getElementById('gal-counter');
+  if(proj.files.length>1){counter.textContent=`${idx+1} / ${proj.files.length}`}
+  else counter.style.display='none';
+
+  // Thumbs
+  const thumbs=document.getElementById('thumbs');
+  if(proj.files.length>1){
+    thumbs.innerHTML=proj.files.map((f2,i)=>{
+      if(f2.type.startsWith('image/')){
+        return `<img class="thumb ${i===idx?'active':''}" data-idx="${i}" src="${f2.data}" alt="${f2.name}">`;
+      }
+      const ext2=f2.name.split('.').pop().toUpperCase();
+      return `<div class="thumb-doc ${i===idx?'active':''}" data-idx="${i}"><span>📄</span>${ext2}</div>`;
+    }).join('');
+    thumbs.querySelectorAll('[data-idx]').forEach(el=>{
+      el.addEventListener('click',()=>renderGallery(parseInt(el.dataset.idx)));
+    });
+  }
+}
+
+function nav(d){
+  const ni=curIdx+d;
+  if(ni>=0&&ni<proj.files.length)renderGallery(ni);
+}
+
+// DOWNLOADS
+function renderDl(){
+  const list=document.getElementById('dl-list');
+  list.innerHTML=proj.files.map((f,i)=>{
+    const ext=f.name.split('.').pop().toLowerCase();
+    const icon=f.type.startsWith('image/')?'🖼':ext==='pdf'?'📑':ext==='ai'||ext==='eps'?'✏':'📄';
+    const size=fmtSize(f.size);
+    return `<div class="dl-item" onclick="dlFile(${i})">
+      <span class="dl-icon">${icon}</span>
+      <div class="dl-info">
+        <div class="dl-name">${f.name}</div>
+        ${size?`<div class="dl-size">${size}</div>`:''}
+      </div>
+      <div class="dl-btn">↓ Download</div>
+    </div>`;
+  }).join('');
+
+  // Hide "all" button if only one file
+  if(proj.files.length<=1)document.getElementById('dl-all-btn').style.display='none';
+}
+
+function dlFile(idx){
+  const f=proj.files[idx];
+  const a=document.createElement('a');
+  a.href=f.data;a.download=f.name;a.click();
+  showToast(`↓ ${f.name}`);
+}
+
+function downloadAll(){
+  proj.files.forEach((f,i)=>{
+    setTimeout(()=>{
+      const a=document.createElement('a');
+      a.href=f.data;a.download=f.name;a.click();
+    },i*400);
+  });
+  showToast(`↓ ${proj.files.length} Dateien werden heruntergeladen`);
+}
+
+function fmtSize(b){
+  if(!b)return'';
+  if(b<1024)return b+'B';
+  if(b<1048576)return(b/1024).toFixed(0)+'KB';
+  return(b/1048576).toFixed(1)+'MB';
+}
+
+// APPROVE
+function approve(){
+  update({status:'approved'});showApproved();showToast('✓ Design freigegeben!');
+}
+function showApproved(){
+  document.getElementById('action-area').style.display='none';
+  document.getElementById('suc-approve').classList.add('show');
+  setStatus('approved');
+}
+
+// FEEDBACK
+function toggleFbForm(){
+  document.getElementById('fb-form').classList.toggle('open');
+}
+function sendFb(){
+  const txt=document.getElementById('fb-text').value.trim();
+  if(!txt){showToast('⚠ Bitte Feedback eingeben');return}
+  const fileRef=document.getElementById('fb-file-ref').value;
+  const fb={id:Date.now(),type:'changes',message:txt,fileRef:fileRef||null,time:new Date().toISOString()};
+  const newFbs=[...(proj.feedback||[]),fb];
+  update({status:'changes',feedback:newFbs});
+  showFbSent();showToast('✉ Feedback gesendet!');
+}
+function showFbSent(){
+  document.getElementById('action-area').style.display='none';
+  document.getElementById('suc-fb').classList.add('show');
+  setStatus('changes');
+}
+
+// HELPERS
+function setStatus(s){
+  const el=document.getElementById('status-bar');
+  el.className='status-bar '+s;
+  el.textContent=s==='approved'?'✓ Freigegeben':s==='changes'?'✎ Änderungen angefragt':'◌ Ausstehende Freigabe';
+}
+function update(changes){
+  Object.assign(proj,changes);
+  const all=getProjects();
+  const i=all.findIndex(p=>p.id===pid);
+  if(i>-1){all[i]=proj;saveProjects(all)}
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+init();
+</script>
+
+</body>
+</html>
